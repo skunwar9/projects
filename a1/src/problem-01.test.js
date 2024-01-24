@@ -22,7 +22,7 @@ describe('Problem 1 - normalizeVariable() function', function () {
   });
 
   test('returns string with internal spaces removed', function () {
-    let result = normalizeVariable('A B       C');
+    let result = normalizeVariable('A B       C'); 
     expect(result).toBe('A_B_C');
   });
 

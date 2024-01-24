@@ -109,7 +109,7 @@
  ******************************************************************************/
 
 function greeting(name) {
-  return `Hello ${name}`;
+  return `Hello ${name}!`;
 }
 
 /*******************************************************************************
@@ -136,7 +136,10 @@ function greeting(name) {
  ******************************************************************************/
 
 function normalizeVariable(value) {
-  // Replace this comment with your code...
+  return value
+    .trim()
+    .replace(/[\t. ]+/g, '_')
+    .toUpperCase();
 }
 
 /*******************************************************************************
@@ -189,7 +192,11 @@ function normalizeVariable(value) {
  ******************************************************************************/
 
 function createIframe(src, height, allowFullScreen) {
-  // Replace this comment with your code...
+  src = src.trim();
+  height = parseInt(height);
+  return `<iframe src="${src}"${height > 0 ? ` height="${height}"` : ''}${
+    allowFullScreen ? ' allowfullscreen' : ''
+  }></iframe>`;
 }
 /*******************************************************************************
  * Problem 3: fix the formatting of Canadian Postal Codes
