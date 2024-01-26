@@ -230,7 +230,15 @@ function createIframe(src, height, allowFullScreen) {
  ******************************************************************************/
 
 function fixPostalCode(postalCode) {
-  // Replace this comment with your code...
+  postalCode = postalCode.replace(/[ ]+/g, '');
+  if (postalCode.length !== 6) {
+    throw new Error('To many characters;');
+  }
+  let newCode = `${postalCode.slice(0, 3)} ${postalCode.slice(3)}`;
+  newCode = newCode.toUpperCase();
+  let match = newCode.match(/[A-CEGHJ-NPR-TVXY]\d[A-CEGHJ-NPR-TV-Z] \d[A-CEGHJ-NPR-TV-Z]\d/g);
+  if (!match) throw new Error('invalid characters');
+  return newCode;
 }
 
 /*******************************************************************************
