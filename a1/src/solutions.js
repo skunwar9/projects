@@ -417,6 +417,23 @@ function formatCoords(...values) {
 
 function countForProvince(provinceCode, ...postalCodes) {
   // Replace this comment with your code...
+  var i,
+    province,
+    num = 0;
+  if (!postalCodes || postalCodes.length == 0) {
+    throw new Error("Error!!");
+  }
+  for (i = 0; i < postalCodes.length; i++) {
+    if (postalCodes[i] == null || typeof (postalCodes[i]) !== 'string')
+    {
+      throw new Error("WRONG!");
+      }
+    province = toProvince(postalCodes[i], true);
+    if (province === provinceCode) {
+      num++;
+    }
+  }
+  return num;
 }
 
 /*******************************************************************************
