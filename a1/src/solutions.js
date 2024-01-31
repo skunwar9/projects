@@ -284,6 +284,34 @@ function fixPostalCode(postalCode) {
 
 function toProvince(postalCode, useShortForm) {
   // Replace this comment with your code...
+  try {
+    var newCode = fixPostalCode(postalCode);
+  } catch (error) {
+    return null;
+  }
+
+  const list = {
+    A: useShortForm ? 'NL' : 'Newfoundland and Labrador',
+    B: useShortForm ? 'NS' : 'Nova Scotia',
+    C: useShortForm ? 'PE' : 'Prince Edward Island',
+    E: useShortForm ? 'NB' : 'New Brunswick',
+    G: useShortForm ? 'QC' : 'Quebec',
+    H: useShortForm ? 'QC' : 'Quebec',
+    J: useShortForm ? 'QC' : 'Quebec',
+    K: useShortForm ? 'ON' : 'Ontario',
+    L: useShortForm ? 'ON' : 'Ontario',
+    M: useShortForm ? 'ON' : 'Ontario',
+    N: useShortForm ? 'ON' : 'Ontario',
+    P: useShortForm ? 'ON' : 'Ontario',
+    R: useShortForm ? 'MB' : 'Manitoba',
+    S: useShortForm ? 'SK' : 'Saskatchewan',
+    T: useShortForm ? 'AB' : 'Alberta',
+    V: useShortForm ? 'BC' : 'British Columbia',
+    X: useShortForm ? 'NT' : 'Northwest Territories and Nunavut',
+    Y: useShortForm ? 'YT' : 'Yukon'
+  };
+
+  return list[newCode[0]];
 }
 
 /*******************************************************************************
@@ -314,6 +342,20 @@ function toProvince(postalCode, useShortForm) {
 
 function normalizeCoord(value) {
   // Replace this comment with your code...
+
+  var normalRegex = /[-]?\d+[.]?\d*/g;
+  var matches = value.match(normalRegex);
+  let lat = matches[0];
+  let long = matches[1];
+  if (value[0] === '[') {
+    lat = matches[1];
+    long = matches[0];
+  }
+  if (lat < -90 || lat > 90 || long < -180 || long > 180) {
+    throw new error('invalid');
+  }
+  var coord = `(${lat}, ${long})`;
+  return coord;
 }
 
 /*******************************************************************************
