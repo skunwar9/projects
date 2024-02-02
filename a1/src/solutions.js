@@ -8,9 +8,9 @@
  *
  * Please update the following with your information:
  *
- *      Name: <YOUR_NAME>
- *      Student ID: <YOUR_STUDENT_ID>
- *      Date: <SUBMISSION_DATE>
+ *      Name: <SHRISTI KUNWAR>
+ *      Student ID: <115687238>
+ *      Date: <2024-02-02>
  *
  * Please see all unit tests in the files problem-00.test.js, problem-01.test.js, etc.
  */
@@ -230,7 +230,8 @@ function createIframe(src, height, allowFullScreen) {
  ******************************************************************************/
 
 function fixPostalCode(postalCode) {
-  postalCode = postalCode.replace(/[ ]+/g, '');
+  postalCode = postalCode.trim();
+  postalCode = postalCode.replace(/[ ]/, '');
   if (postalCode.length !== 6) {
     throw new Error('To many characters;');
   }
@@ -387,25 +388,22 @@ function normalizeCoord(value) {
 
 function formatCoords(...values) {
   // Replace this comment with your code...
- 
-    let formattedCoords = [];
 
-    values.forEach((value) => {
-      try {
-        let coord = normalizeCoord(value);
-        if (coord) {
-          formattedCoords.push(coord);
-        }
-      } catch (error) {
-        
+  let formattedCoords = [];
+
+  values.forEach((value) => {
+    try {
+      let coord = normalizeCoord(value);
+      if (coord) {
+        formattedCoords.push(coord);
       }
-    });
+    } catch (error) {
+      //pass
+    }
+  });
 
-    return `(${formattedCoords.join(', ')})`;
-  }
-
-
-
+  return `(${formattedCoords.join(', ')})`;
+}
 
 /*******************************************************************************
  * Problem 7: count valid postal codes for a given province code
@@ -439,13 +437,12 @@ function countForProvince(provinceCode, ...postalCodes) {
     province,
     num = 0;
   if (!postalCodes || postalCodes.length == 0) {
-    throw new Error("Error!!");
+    throw new Error('Error!!');
   }
   for (i = 0; i < postalCodes.length; i++) {
-    if (postalCodes[i] == null || typeof (postalCodes[i]) !== 'string')
-    {
-      throw new Error("WRONG!");
-      }
+    if (postalCodes[i] === null || typeof postalCodes[i] !== 'string') {
+      throw new Error('WRONG!');
+    }
     province = toProvince(postalCodes[i], true);
     if (province === provinceCode) {
       num++;
@@ -504,7 +501,6 @@ function countForProvince(provinceCode, ...postalCodes) {
  ******************************************************************************/
 
 function generateLicenseLink(licenseCode, targetBlank = false) {
- 
   const licenses = {
     'CC-BY': 'Creative Commons Attribution License',
     'CC-BY-NC': 'Creative Commons Attribution-NonCommercial License',
@@ -514,28 +510,21 @@ function generateLicenseLink(licenseCode, targetBlank = false) {
     'CC-BY-NC-ND': 'Creative Commons Attribution-NonCommercial-NoDerivs License'
   };
 
-  
   const baseUrl = 'https://creativecommons.org/licenses/';
 
-  
   let licenseUrl = 'https://choosealicense.com/no-permission/';
   let licenseText = 'All Rights Reserved';
 
- 
   if (licenseCode in licenses) {
-   
     const urlCode = licenseCode.substring(3).toLowerCase();
     licenseUrl = `${baseUrl}${urlCode}/4.0/`;
     licenseText = licenses[licenseCode];
   }
 
-  
   const targetAttr = targetBlank ? ' target="_blank"' : '';
 
- 
   return `<a href="${licenseUrl}"${targetAttr}>${licenseText}</a>`;
 }
-
 
 /*******************************************************************************
  * Problem 9 Part 1: convert a value to a Boolean (true or false)
@@ -562,7 +551,27 @@ function generateLicenseLink(licenseCode, targetBlank = false) {
  ******************************************************************************/
 
 function pureBool(value) {
-  // Replace this comment with your code...
+  const trueValues = ['yes', 'y', 'oui', 'o', 't', 'true', 'vrai', 'v'];
+
+  const falseValues = ['no', 'N', 'non', 'n', 'f', 'false', 'faux'];
+
+  if (typeof value === 'boolean') {
+    return value;
+  } else if (typeof value === 'string') {
+    if (trueValues.includes(value.toLocaleLowerCase())) {
+      return true;
+    } else if (falseValues.includes(value.toLocaleLowerCase())) {
+      return false;
+    }
+  } else if (typeof value === 'number') {
+    if (value > 0) {
+      return true;
+    } else if (value <= 0) {
+      return false;
+    }
+  } else {
+    throw new Error('invalid value');
+  }
 }
 
 /*******************************************************************************
@@ -579,16 +588,28 @@ function pureBool(value) {
  * throws on invalid data.
  ******************************************************************************/
 
-function every() {
-  // Replace this comment with your code...
+function every(...values) {
+  try {
+    return values.every((value) => pureBool(value));
+  } catch (error) {
+    return false;
+  }
 }
 
-function any() {
-  // Replace this comment with your code...
+function any(...values) {
+  try {
+    return values.some((value) => pureBool(value));
+  } catch (error) {
+    return false;
+  }
 }
 
-function none() {
-  // Replace this comment with your code...
+function none(...values) {
+  try {
+    return values.every((value) => !pureBool(value));
+  } catch (error) {
+    return false;
+  }
 }
 
 /*******************************************************************************
@@ -644,8 +665,44 @@ function none() {
  ******************************************************************************/
 
 function buildUrl(query, order, count, license) {
-  // Replace this comment with your code...
+  // Validate 'count' is within the allowed range
+  if (count < 1 || count > 30) {
+    throw new Error('Count must be between 1 and 30.');
+  }
+
+  // Validate 'order' and normalize if necessary
+  if (order === 'asc') {
+    order = 'ascending';
+  } else if (order === 'desc') {
+    order = 'descending';
+  } else if (order !== 'ascending' && order !== 'descending') {
+    throw new Error('Order must be "ascending", "descending", "asc", or "desc".');
+  }
+
+  // Validate 'license' is one of the allowed values
+  const allowedLicenses = [
+    'none',
+    'any',
+    'cc-by',
+    'cc-by-nc',
+    'cc-by-sa',
+    'cc-by-nd',
+    'cc-by-nc-sa',
+    'cc-by-nc-nd'
+  ];
+  if (!allowedLicenses.includes(license)) {
+    throw new Error('License must be one of the specified values.');
+  }
+
+  // Ensure 'query' is properly URI encoded
+  query = encodeURIComponent(query);
+
+  // Construct and return the URL
+  return `https://api.inaturalist.org/v2/observations?query=${query}&count=${count}&order=${order}&license=${license}`;
 }
+
+// Exports buildUrl for use in unit tests
+exports.buildUrl = buildUrl;
 
 // Our unit test files need to access the functions we defined
 // above, so we export them here.
