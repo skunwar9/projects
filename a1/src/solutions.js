@@ -352,7 +352,7 @@ function normalizeCoord(value) {
     long = matches[0];
   }
   if (lat < -90 || lat > 90 || long < -180 || long > 180) {
-    throw new error('invalid');
+    throw new Error('invalid');
   }
   var coord = `(${lat}, ${long})`;
   return coord;
@@ -387,7 +387,25 @@ function normalizeCoord(value) {
 
 function formatCoords(...values) {
   // Replace this comment with your code...
-}
+ 
+    let formattedCoords = [];
+
+    values.forEach((value) => {
+      try {
+        let coord = normalizeCoord(value);
+        if (coord) {
+          formattedCoords.push(coord);
+        }
+      } catch (error) {
+        
+      }
+    });
+
+    return `(${formattedCoords.join(', ')})`;
+  }
+
+
+
 
 /*******************************************************************************
  * Problem 7: count valid postal codes for a given province code
