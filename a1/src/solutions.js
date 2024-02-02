@@ -503,9 +503,39 @@ function countForProvince(provinceCode, ...postalCodes) {
  * @returns {string}
  ******************************************************************************/
 
-function generateLicenseLink(licenseCode, targetBlank) {
-  // Replace this comment with your code...
+function generateLicenseLink(licenseCode, targetBlank = false) {
+ 
+  const licenses = {
+    'CC-BY': 'Creative Commons Attribution License',
+    'CC-BY-NC': 'Creative Commons Attribution-NonCommercial License',
+    'CC-BY-SA': 'Creative Commons Attribution-ShareAlike License',
+    'CC-BY-ND': 'Creative Commons Attribution-NoDerivs License',
+    'CC-BY-NC-SA': 'Creative Commons Attribution-NonCommercial-ShareAlike License',
+    'CC-BY-NC-ND': 'Creative Commons Attribution-NonCommercial-NoDerivs License'
+  };
+
+  
+  const baseUrl = 'https://creativecommons.org/licenses/';
+
+  
+  let licenseUrl = 'https://choosealicense.com/no-permission/';
+  let licenseText = 'All Rights Reserved';
+
+ 
+  if (licenseCode in licenses) {
+   
+    const urlCode = licenseCode.substring(3).toLowerCase();
+    licenseUrl = `${baseUrl}${urlCode}/4.0/`;
+    licenseText = licenses[licenseCode];
+  }
+
+  
+  const targetAttr = targetBlank ? ' target="_blank"' : '';
+
+ 
+  return `<a href="${licenseUrl}"${targetAttr}>${licenseText}</a>`;
 }
+
 
 /*******************************************************************************
  * Problem 9 Part 1: convert a value to a Boolean (true or false)
