@@ -13,7 +13,7 @@ void kmsToMiles(double valueInKm)
 
 void inchesToFoot(double valueInInches)
 {
-    const double foot = 0.083 * valueInInches;
+    const double foot = valueInInches/12 ;
     printf("%.2lf inches is equal to %.2lf foot\n", valueInInches, foot);
 }
 
