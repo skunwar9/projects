@@ -8,9 +8,10 @@ int main(){
     int a = 3;
     int *b = &a;
     cout << b<<endl;
-    //cout << &a;
-    // * ---> dereference operator
-    // & ---> address of operator
+
+    // cout << &a;
+    //  * ---> gives value at dereference operator
+    //  & ---> address of operator
     cout << "value at address b is " << *b << endl;
 
 //pointer to pointer
