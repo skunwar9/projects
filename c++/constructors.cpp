@@ -1,8 +1,9 @@
 #include<iostream>
 #include "constructor.h"
 using namespace std;
-Car::Car(){
-    std::cout << "constructor without argument";
+Car::Car() : model(3)
+{
+    std::cout << "constructor without argument" << endl;
 }
 Car::Car(int a)
 {
@@ -18,6 +19,8 @@ void Car::printData(){
 }
 int main(){
     Car toyota(2);
+    Car maruti;
     toyota.printData();
+    maruti.printData();
     return 0;
 }
