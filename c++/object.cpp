@@ -8,7 +8,7 @@ class Employee
 
     public:
         int d, e;
-        void setData(int a1, int b1, int c1); //declaration of function
+        void setData(int a1, int b1, int c1); //declaration
         void getData(){
             cout << "The value of a is " << a << endl;
             cout << "The value of b is " << b << endl;
