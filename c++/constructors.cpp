@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 #include "constructor.h"
 using namespace std;
 Car::Car() : model(3)
@@ -14,10 +14,12 @@ Car::~Car()
 {
     cout << "bye";
 }
-void Car::printData(){
+void Car::printData()
+{
     cout << model;
 }
-int main(){
+int main()
+{
     Car toyota(2);
     Car maruti;
     toyota.printData();
